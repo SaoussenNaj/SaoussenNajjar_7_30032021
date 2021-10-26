@@ -3,6 +3,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const helmet = require("helmet");
+var cors = require("cors");
+const userRoutes = require("./routes/user");
+const db = require("./models");
 
 //
 // creation variable app pour notre application et appeler express()ce qui permet de créer une application express
@@ -24,7 +27,10 @@ app.use((req, res, next) => {
 });
 app.use(bodyParser.json());
 app.use(helmet());
+app.use(cors());
+db.sequelize.sync();
 app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/api/auth", userRoutes);
 
 // exporter cette const app pour qu'on puisse y acceder depuis les autres fichiers
 module.exports = app;
