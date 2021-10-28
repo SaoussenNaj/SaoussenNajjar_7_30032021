@@ -113,7 +113,7 @@ exports.deletePost = (req, res, next) => {
           where: { id: req.params.id },
         })
         .then((post) => {
-          //check if author or admin
+          //verifier si il s'agit d'un utilisateur ou d'un admin
           if (
             req.body.userId == post.dataValues.userId ||
             user.dataValues.isAdmin == "1"
