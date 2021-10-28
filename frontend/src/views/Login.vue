@@ -1,33 +1,43 @@
 <template>
-  <div class="submit-form">
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input
-        type="email"
-        class="form-control"
-        id="email"
-        required
-        v-model="user.email"
-        name="email"
+  <div>
+    <div>
+      <img
+        alt="Vue logo"
+        src="../assets/icon-left-font-monochrome-black.png"
+        width="300px"
       />
     </div>
+    <div class="submit-form">
+      <h2 class="styleTitle">Login</h2>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          required
+          v-model="user.email"
+          name="email"
+        />
+      </div>
 
-    <div class="form-group">
-      <label for="password">Mot de passe</label>
-      <input
-        type="password"
-        class="form-control"
-        id="password"
-        required
-        v-model="user.password"
-        name="password"
-      />
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          required
+          v-model="user.password"
+          name="password"
+        />
+      </div>
+
+      <button @click="verifieUser" class="btn btn-success btn-props">
+        Se connecter
+      </button>
+      <router-link to="/inscription" id="routerLink">S'inscrire</router-link>
     </div>
-
-    <button @click="verifieUser" class="btn btn-success btn-props">
-      Se connecter
-    </button>
-    <router-link to="/inscription" id="routerLink">S'inscrire</router-link>
   </div>
 </template>
 
@@ -56,7 +66,7 @@ export default {
       };
       login(data)
         .then(() => {
-          this.$router.push("Home"); //push() pour la redirection vers la page Home
+          this.$router.push("/"); //push() pour la redirection vers la page Home
         })
         .catch((err) => console.log(err));
     },
@@ -79,5 +89,13 @@ export default {
 }
 #routerLink {
   margin-left: 10px;
+}
+.logo {
+  width: 70%;
+}
+.styleTitle {
+  color: blue;
+  text-decoration-line: underline;
+  margin-bottom: 40px;
 }
 </style>

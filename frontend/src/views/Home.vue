@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" class="logo" />
     <NavBar />
   </div>
 </template>
@@ -10,19 +9,12 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 import NavBar from "@/components/NavBar.vue";
 
-
 export default {
   name: "Home",
   components: {
-    NavBar
+    NavBar,
   },
 };
 </script>
 
-<style scoped>
-.logo {
-  width: 10%;
-  display: flex;
-  justify-content: flex-start;
-}
-</style>
+<style scoped></style>

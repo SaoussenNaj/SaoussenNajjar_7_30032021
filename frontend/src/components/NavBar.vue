@@ -3,10 +3,7 @@
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
         <a class="navbar-brand">
-          <img
-            alt="Vue logo"
-            src="/assets/icon-left-font-monochrome-black.png"
-          />
+          <img alt="logo-Groupomania" src="/assets/logo.png" width="150px" />
         </a>
         <form class="d-flex">
           <input
@@ -24,8 +21,7 @@
 
 <script>
 export default {
-  name: "NavBar"
-  
+  name: "NavBar",
 };
 </script>
 
