@@ -1,5 +1,6 @@
 const db = require("../models");
 const fs = require("fs");
+const jwt = require("jsonwebtoken");
 
 // Lire tous les posts avec leurs comments
 exports.getPosts = (req, res, next) => {
@@ -20,17 +21,34 @@ exports.getPosts = (req, res, next) => {
 };
 
 //Creer un post
+exports.getPost = (req, res, next) => {
+  db.post
+    .findOne({
+      where: { id: req.params.id },
+    })
+    .then((post) => {
+      res.status(200).json({
+        post,
+      });
+    })
+    .catch((error) => res.status(400).json({ error }));
+};
+
+//Creer un post
 exports.createPost = (req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const userId = decodedToken.userId;
   db.user
     .findOne({
       attributes: ["username"],
-      where: { id: req.body.userId },
+      where: { id: userId },
     })
     .then((user) => {
       console.log(user);
 
       const newPost = {
-        userId: req.body.userId,
+        userId: userId,
         title: req.body.title,
         username: user.dataValues.username,
         description: req.body.description,
@@ -49,10 +67,13 @@ exports.createPost = (req, res, next) => {
 
 //  modifier un post
 exports.modifyPost = (req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const userId = decodedToken.userId;
   db.user
     .findOne({
       attributes: ["isAdmin"],
-      where: { id: req.body.userId },
+      where: { id: userId },
     })
     .then((user) => {
       db.post
@@ -61,9 +82,10 @@ exports.modifyPost = (req, res, next) => {
           where: { id: req.params.id },
         })
         .then((post) => {
+          console.log({ post, user });
           //verifier s'il s'agit du meme utilisateur ou un admin
           if (
-            req.body.userId == post.dataValues.userId ||
+            userId == post.dataValues.userId ||
             user.dataValues.isAdmin == "1"
           ) {
             let postObject = {
@@ -101,10 +123,13 @@ exports.modifyPost = (req, res, next) => {
 
 // supprimer post
 exports.deletePost = (req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const userId = decodedToken.userId;
   db.user
     .findOne({
       attributes: ["isAdmin", "username"],
-      where: { id: req.body.userId },
+      where: { id: userId },
     })
     .then((user) => {
       db.post
@@ -115,7 +140,7 @@ exports.deletePost = (req, res, next) => {
         .then((post) => {
           //verifier si il s'agit d'un utilisateur ou d'un admin
           if (
-            req.body.userId == post.dataValues.userId ||
+            userId == post.dataValues.userId ||
             user.dataValues.isAdmin == "1"
           ) {
             const filename = post.dataValues.imgURL.split("/images/")[1];

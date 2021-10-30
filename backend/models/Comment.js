@@ -3,12 +3,11 @@ module.exports = (sequelize, Sequelize) => {
     author: {
       type: Sequelize.STRING,
     },
-
     authorId: {
-      type: Sequelize.INT,
+      type: Sequelize.INTEGER,
     },
     postId: {
-      type: Sequelize.INT,
+      type: Sequelize.INTEGER,
     },
     comment: {
       type: Sequelize.STRING,

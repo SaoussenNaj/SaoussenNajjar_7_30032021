@@ -5,6 +5,8 @@ const path = require("path");
 const helmet = require("helmet");
 var cors = require("cors");
 const userRoutes = require("./routes/user");
+const postRoutes = require("./routes/post");
+const commentRoutes = require("./routes/comment");
 const db = require("./models");
 
 //
@@ -31,6 +33,8 @@ app.use(cors());
 db.sequelize.sync();
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/api/auth", userRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/comments", commentRoutes);
 
 // exporter cette const app pour qu'on puisse y acceder depuis les autres fichiers
 module.exports = app;

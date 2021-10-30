@@ -1,17 +1,21 @@
 const fs = require("fs");
 const db = require("../models");
+const jwt = require("jsonwebtoken");
 
 // Ajout d'un commentaire
 exports.addComment = (req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const userId = decodedToken.userId;
   db.user
     .findOne({
       attributes: ["username"],
-      where: { id: req.body.userId },
+      where: { id: userId },
     })
     .then((user) => {
       const newComment = {
         author: user.dataValues.username,
-        authorId: req.body.userId,
+        authorId: userId,
         postId: req.params.id,
         comment: req.body.comment,
       };
@@ -24,10 +28,13 @@ exports.addComment = (req, res, next) => {
 
 // Modifier un commentaire
 exports.modifyComment = (req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const userId = decodedToken.userId;
   db.user
     .findOne({
       attributes: ["isAdmin"],
-      where: { id: req.body.userId },
+      where: { id: userId },
     })
     .then((user) => {
       db.comment
@@ -38,7 +45,7 @@ exports.modifyComment = (req, res, next) => {
         .then((comment) => {
           //verifier si l'utilisateur est admin ou pas
           if (
-            req.body.userId == comment.dataValues.authorId ||
+            userId == comment.dataValues.authorId ||
             user.dataValues.isAdmin == "1"
           ) {
             const newComment = {
@@ -59,10 +66,13 @@ exports.modifyComment = (req, res, next) => {
 
 // Suppression d'un commentaire
 exports.deleteComment = (req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const userId = decodedToken.userId;
   db.user
     .findOne({
       attributes: ["isAdmin"],
-      where: { id: req.body.userId },
+      where: { id: userId },
     })
     .then((user) => {
       db.comment
@@ -73,7 +83,7 @@ exports.deleteComment = (req, res, next) => {
         .then((comment) => {
           //verifier si l'utilisateur est admin ou pas
           if (
-            req.body.userId == comment.dataValues.authorId ||
+            userId == comment.dataValues.authorId ||
             user.dataValues.isAdmin == "1"
           ) {
             db.comment

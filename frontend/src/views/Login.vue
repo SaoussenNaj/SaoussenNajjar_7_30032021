@@ -65,7 +65,8 @@ export default {
         password: this.user.password,
       };
       login(data)
-        .then(() => {
+        .then((response) => {
+          localStorage.setItem("token", response.data.token);
           this.$router.push("/"); //push() pour la redirection vers la page Home
         })
         .catch((err) => console.log(err));
