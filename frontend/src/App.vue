@@ -1,12 +1,25 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
+    <NavBar />
     <router-view />
+    <Footer />
   </div>
 </template>
+
+<script>
+// @ is an alias to /src
+// import HelloWorld from '@/components/HelloWorld.vue'
+import NavBar from "@/components/NavBar.vue";
+import Footer from "@/components/Footer.vue";
+
+export default {
+  name: "App",
+  components: {
+    NavBar,
+    Footer,
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
@@ -15,6 +28,8 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  width: 100%;
+  height: 100%;
 }
 
 #nav {

@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const db = require("../models");
 const fs = require("fs");
+const Op = db.Sequelize.Op;
 
 // Inscription de nouveaux utilisateurs
 exports.signup = (req, res, next) => {
@@ -39,6 +40,7 @@ exports.login = (req, res, next) => {
           }
           return res.status(200).json({
             userId: user.id,
+            isAdmin: user.isAdmin,
             token: jwt.sign({ userId: user.id }, "RANDOM_TOKEN_SECRET", {
               expiresIn: "2h",
             }),
@@ -50,9 +52,13 @@ exports.login = (req, res, next) => {
 };
 //supprimer un utilisateur
 exports.delete = (req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const userId = decodedToken.userId;
+  console.log(req.body.password);
   db.user
     .findOne({
-      where: { id: req.body.userId },
+      where: { id: userId },
     })
     .then((user) => {
       if (!user) {
@@ -66,8 +72,9 @@ exports.delete = (req, res, next) => {
             return res.status(401).json({ error: "Mot de passe incorrecte !" });
           }
           //supprimer l'utilisateur et tous les posts qui lui correspond
-          db.user.destroy({ where: { id: req.body.userId } });
-          Post.findAll({ where: { userId: req.body.userId } })
+          db.user.destroy({ where: { id: userId } });
+          db.post
+            .findAll({ where: { userId: userId } })
             .then((result) => {
               let postsId = [];
               let postsUrlImage = [];
@@ -88,16 +95,57 @@ exports.delete = (req, res, next) => {
               //et supprime les commentaires des utilisateurs, ainsi que les commentaires liés aux publications qui ont été supprimées
               db.comment.destroy({
                 where: {
-                  [Op.or]: [{ authorId: req.body.userId }, { postId: postsId }],
+                  [Op.or]: [{ authorId: userId }, { postId: postsId }],
                 },
               });
               //delete user posts
-              Post.destroy({ where: { userId: req.body.userId } }).then(() => {
+              db.post.destroy({ where: { userId: userId } }).then(() => {
                 res.status(200).json({ message: "User deleted" });
               });
             })
             .catch((error) => res.status(401).json({ error }));
         });
+    })
+    .catch((error) => res.status(500).json({ error }));
+};
+
+exports.getAdmins = (req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const userId = decodedToken.userId;
+  db.user
+    .findOne({
+      attributes: ["isAdmin"],
+      where: { id: userId },
+    })
+    .then((user) => {
+      if (user.dataValues.isAdmin == "1") {
+        db.user
+          .findAll({
+            where: { isAdmin: "1" },
+          })
+          .then((users) => {
+            res.status(200).json({ users });
+          })
+          .catch((error) => res.status(500).json({ error }));
+      } else {
+        throw new Error("unauthorized");
+      }
+    })
+    .catch((error) => res.status(500).json({ error }));
+};
+
+exports.getUser = (req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const userId = decodedToken.userId;
+  db.user
+    .findOne({
+      attributes: ["username", "email"],
+      where: { id: userId },
+    })
+    .then((user) => {
+      res.status(200).json({ user });
     })
     .catch((error) => res.status(500).json({ error }));
 };

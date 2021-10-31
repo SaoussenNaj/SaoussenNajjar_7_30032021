@@ -3,14 +3,14 @@
     <!-- for new post -->
     <form id="formPost">
       <div class="header-box">
-        <h2>Nouveau Post</h2>
+        <h1>Nouveau Post</h1>
       </div>
       <div v-if="image != ''" class="image-block">
         <img :src="image" />
       </div>
 
       <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
+        <label for="title" class="form-label">Titre</label>
         <input
           v-model="title"
           class="form-control"
@@ -40,7 +40,7 @@
         />
         <input
           type="button"
-          value="Choisir une image*"
+          value="Choisir une image"
           onclick="document.getElementById('input-image').click();"
         />
         <button @click="submitData" type="button">
@@ -55,7 +55,7 @@
 import { mapState } from "vuex";
 import { createPost } from "../services/post";
 export default {
-  name: "DialogBoxPost",
+  name: "AjoutPost",
   computed: {
     ...mapState(["api", "user", "boxPost"]),
   },
@@ -68,7 +68,7 @@ export default {
     };
   },
   methods: {
-    //to generate the image selected by the user
+    //pour générer l'image sélectionnée par l'utilisateur
     createImage(file) {
       const reader = new FileReader();
       const vm = this;
@@ -77,6 +77,7 @@ export default {
       };
       reader.readAsDataURL(file);
     },
+    // téléchargement de l'image
     updatePicture(e) {
       const file = e.target.files || e.dataTransfer.files;
       if (!file.length) {
@@ -86,7 +87,7 @@ export default {
       this.createImage(file[0]);
     },
 
-    /* Submit */
+    /* Envoie des données*/
     submitData() {
       if (this.submitDisabled) {
         return;

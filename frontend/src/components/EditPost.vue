@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Navbar />
     <!-- for new post -->
     <form id="formPost">
       <div class="header-box">
@@ -53,6 +54,7 @@
 
 <script>
 import { getPostById, modifyPost } from "../services/post";
+
 export default {
   name: "EditPost",
   data() {

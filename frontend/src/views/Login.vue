@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <div>
       <img
         alt="Vue logo"
@@ -10,7 +10,7 @@
     <div class="submit-form">
       <h2 class="styleTitle">Login</h2>
       <div class="form-group">
-        <label for="email">Email</label>
+        <label for="email" class="label-style">Email</label>
         <input
           type="email"
           class="form-control"
@@ -22,7 +22,7 @@
       </div>
 
       <div class="form-group">
-        <label for="password">Mot de passe</label>
+        <label for="password" class="label-style">Mot de passe</label>
         <input
           type="password"
           class="form-control"
@@ -32,11 +32,14 @@
           name="password"
         />
       </div>
-
-      <button @click="verifieUser" class="btn btn-success btn-props">
-        Se connecter
-      </button>
-      <router-link to="/inscription" id="routerLink">S'inscrire</router-link>
+      <div class="btn-lien">
+        <button @click="verifieUser" class="btn btn-success btn-props">
+          Se connecter
+        </button>
+        <button @click="goToRegister" class="btn btn-success btn-props">
+          S'inscrire
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -67,20 +70,29 @@ export default {
       login(data)
         .then((response) => {
           localStorage.setItem("token", response.data.token);
+          localStorage.setItem("isAdmin", response.data.isAdmin);
+          localStorage.setItem("userId", response.data.userId);
           this.$router.push("/"); //push() pour la redirection vers la page Home
         })
         .catch((err) => console.log(err));
     },
-
-    // newUser() {
-    //   this.submitted = false;
-    //   this.user = {};
-    // },
+    goToRegister() {
+      this.$router.push("/inscription");
+    },
   },
 };
 </script>
 
 <style>
+.main {
+  background-image: url(../assets/london.png);
+  background-repeat: no-repeat;
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-size: cover;
+}
 .submit-form {
   max-width: 300px;
   margin: auto;
@@ -95,8 +107,15 @@ export default {
   width: 70%;
 }
 .styleTitle {
-  color: blue;
-  text-decoration-line: underline;
+  color: black;
   margin-bottom: 40px;
+}
+.label-style {
+  color: white;
+}
+.btn-lien {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>

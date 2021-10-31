@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <div>
       <img
         alt="Vue logo"
@@ -11,7 +11,7 @@
     <div class="submit-form">
       <h2 class="styleTitle">Signup</h2>
       <div class="form-group">
-        <label for="email">Email</label>
+        <label for="email" class="label-style">Email</label>
         <input
           type="email"
           class="form-control"
@@ -23,7 +23,7 @@
       </div>
 
       <div class="form-group">
-        <label for="username">Nom d'utilisateur</label>
+        <label for="username" class="label-style">Nom d'utilisateur</label>
         <input
           type="username"
           class="form-control"
@@ -35,10 +35,10 @@
       </div>
 
       <div class="form-group">
-        <label for="password">Mot de passe</label>
+        <label for="password" class="label-style">Mot de passe</label>
         <input
           type="password"
-          class="form-control"
+          class="form-control "
           id="password"
           required
           v-model="user.password"
@@ -92,6 +92,15 @@ export default {
 </script>
 
 <style>
+.main {
+  background-image: url(../assets/london.png);
+  background-repeat: no-repeat;
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-size: cover;
+}
 .submit-form {
   max-width: 300px;
   margin: auto;
@@ -100,8 +109,10 @@ export default {
   margin-top: 30px;
 }
 .styleTitle {
-  color: blue;
-  text-decoration-line: underline;
+  color: black;
   margin-bottom: 40px;
+}
+.label-style {
+  color: white;
 }
 </style>
