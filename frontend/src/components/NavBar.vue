@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navStyle">
       <div class="container-fluid" style="  position: sticky;top: 0;">
-        <a class="navbar-brand">
+        <a class="navbar-brand" href="/Home">
           <img
             alt="logo-Groupomania"
             src="/assets/logo.png"

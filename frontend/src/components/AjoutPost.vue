@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <!-- for new post -->
     <form id="formPost">
       <div class="header-box">
@@ -8,44 +8,45 @@
       <div v-if="image != ''" class="image-block">
         <img :src="image" />
       </div>
+      <div class="style-li">
+        <div class="mb-3">
+          <label for="title" class="form-label">Titre</label>
+          <input
+            v-model="title"
+            class="form-control"
+            name="title"
+            id="title"
+            type="text"
+          />
+        </div>
 
-      <div class="mb-3">
-        <label for="title" class="form-label">Titre</label>
-        <input
-          v-model="title"
-          class="form-control"
-          name="title"
-          id="title"
-          type="text"
-        />
-      </div>
-
-      <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <input
-          v-model="description"
-          class="form-control"
-          name="description"
-          id="description"
-          type="text"
-        />
-      </div>
-      <div>
-        <input
-          name="image"
-          type="file"
-          id="input-image"
-          @change="updatePicture"
-          accept="image/png, image/jpg, image/jpeg, image/gif"
-        />
-        <input
-          type="button"
-          value="Choisir une image"
-          onclick="document.getElementById('input-image').click();"
-        />
-        <button @click="submitData" type="button">
-          Valider
-        </button>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <input
+            v-model="description"
+            class="form-control"
+            name="description"
+            id="description"
+            type="text"
+          />
+        </div>
+        <div>
+          <input
+            name="image"
+            type="file"
+            id="input-image"
+            @change="updatePicture"
+            accept="image/png, image/jpg, image/jpeg, image/gif"
+          />
+          <input
+            type="button"
+            value="Choisir une image"
+            onclick="document.getElementById('input-image').click();"
+          />
+          <button @click="submitData" type="button">
+            Valider
+          </button>
+        </div>
       </div>
     </form>
   </div>
@@ -108,6 +109,29 @@ export default {
 </script>
 
 <style scoped>
+.main {
+  background-image: url(../assets/london.png);
+  background-repeat: no-repeat;
+  height: 100%;
+  /*Centrez et redimensionnez bien l'image */
+  background-position: center;
+  background-size: cover;
+}
+.list {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.style-li {
+  width: 50%;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 /* .dialog-box-post {
   z-index: 100;
   position: fixed;
