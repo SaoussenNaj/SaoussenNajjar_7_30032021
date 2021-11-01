@@ -1,13 +1,9 @@
 <template>
   <div>
     <nav class="navbar navStyle">
-      <div class="container-fluid" style="  position: sticky;top: 0;">
+      <div class="container-fluid position">
         <a class="navbar-brand" href="/Home">
-          <img
-            alt="logo-Groupomania"
-            src="/assets/logo.png"
-            style="width:150px;height:150px"
-          />
+          <img class="logo" alt="logo" src="/assets/icon-left-font.png" />
         </a>
         <form class="d-flex">
           <button
@@ -64,6 +60,10 @@ export default {
 </script>
 
 <style scoped>
+.position {
+  position: sticky;
+  top: 0;
+}
 .navStyle {
   background-color: #181f44;
   position: sticky;
@@ -74,5 +74,9 @@ export default {
 }
 .h4 {
   color: red;
+}
+.logo {
+  width: 150px;
+  height: 150px;
 }
 </style>

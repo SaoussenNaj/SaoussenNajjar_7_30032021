@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// Etablir la communication entre backend et frontend grace à l'URL et via la bibliothèque AXIOS
+// Etablir la communication entre backend et frontend grace à l'URL(End Point) et via la bibliothèque AXIOS
 export const getPosts = () =>
   axios.get("http://localhost:3000/api/posts", {
     headers: {

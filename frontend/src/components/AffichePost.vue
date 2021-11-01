@@ -83,8 +83,18 @@
           </button>
         </div>
         <div class="btn-edit-delete-post">
-          <a class="btn btn-warning" @click="goToEditPage(post.id)">Modifier</a>
-          <a class="btn btn-danger" @click="deletePost(post.id)">Supprimer</a>
+          <a
+            class="btn btn-warning"
+            v-if="userId == post.userId || isAdmin === 'true'"
+            @click="goToEditPage(post.id)"
+            >Modifier</a
+          >
+          <a
+            class="btn btn-danger"
+            v-if="userId == post.userId || isAdmin === 'true'"
+            @click="deletePost(post.id)"
+            >Supprimer</a
+          >
         </div>
       </div>
     </div>

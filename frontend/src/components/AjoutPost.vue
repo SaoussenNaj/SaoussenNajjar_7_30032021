@@ -39,11 +39,12 @@
             accept="image/png, image/jpg, image/jpeg, image/gif"
           />
           <input
+            class="margin"
             type="button"
             value="Choisir une image"
             onclick="document.getElementById('input-image').click();"
           />
-          <button @click="submitData" type="button">
+          <button @click="submitData" type="button" class="margin">
             Valider
           </button>
         </div>
@@ -95,7 +96,7 @@ export default {
       }
       let formData = {};
       formData = new FormData(document.getElementById("formPost"));
-
+      // création d'un nouveau post
       createPost(formData)
         .then(() => {
           this.$router.push("/");
@@ -131,7 +132,9 @@ export default {
   align-items: center;
   justify-content: center;
 }
-
+.margin {
+  margin-left: 10px;
+}
 /* .dialog-box-post {
   z-index: 100;
   position: fixed;

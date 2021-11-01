@@ -2,7 +2,6 @@
   <div class="footer">
     <a href="#">Contact</a>
     <a href="#">Aide</a>
-    <a href="#">Information</a>
   </div>
 </template>
 <script>

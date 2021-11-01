@@ -1,7 +1,7 @@
 <template>
-  <div class="container-fluid" style="height:100%">
+  <div class="container-fluid main">
     <h1>Liste des administrateurs</h1>
-    <ul class="list-group">
+    <ul class="list-group list">
       <li v-for="admin in admins" v-bind:key="admin.id" class="list-group-item">
         {{ admin.username }}
       </li>
@@ -24,4 +24,24 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.main {
+  background-image: url(../assets/london.png);
+  background-repeat: no-repeat;
+  height: 100%;
+  /*Centrez et redimensionnez bien l'image */
+  background-position: center;
+  background-size: cover;
+}
+.list {
+  /* display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center; */
+  width: 50%;
+  justify-content: center;
+}
+.margin {
+  margin-bottom: 15px;
+}
+</style>
