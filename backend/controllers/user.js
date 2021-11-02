@@ -141,7 +141,7 @@ exports.getUser = (req, res, next) => {
   const userId = decodedToken.userId;
   db.user
     .findOne({
-      attributes: ["username", "email"],
+      attributes: ["username", "email", "id", "isAdmin"],
       where: { id: userId },
     })
     .then((user) => {

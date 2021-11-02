@@ -18,6 +18,9 @@ export default {
     NavBar,
     Footer,
   },
+  mounted() {
+    if (localStorage.getItem("token")) this.$store.dispatch("getUser");
+  },
 };
 </script>
 

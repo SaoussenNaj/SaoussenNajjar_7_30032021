@@ -49,14 +49,14 @@
               <div class="edit-delete-icon">
                 <span @click="showEdit(comment.id, comment.comment)">
                   <i
-                    v-if="userId == comment.authorId || isAdmin === 'true'"
+                    v-if="userId == comment.authorId || isAdmin === true"
                     class="fas fa-edit"
                     style="cursor: pointer;"
                   ></i>
                 </span>
                 <span @click="deleteComment(comment.id)">
                   <i
-                    v-if="userId == comment.authorId || isAdmin === 'true'"
+                    v-if="userId == comment.authorId || isAdmin === true"
                     class="fas fa-trash-alt"
                     style="cursor: pointer;"
                   ></i
@@ -85,13 +85,13 @@
         <div class="btn-edit-delete-post">
           <a
             class="btn btn-warning"
-            v-if="userId == post.userId || isAdmin === 'true'"
+            v-if="userId == post.userId || isAdmin === true"
             @click="goToEditPage(post.id)"
             >Modifier</a
           >
           <a
             class="btn btn-danger"
-            v-if="userId == post.userId || isAdmin === 'true'"
+            v-if="userId == post.userId || isAdmin === true"
             @click="deletePost(post.id)"
             >Supprimer</a
           >
@@ -110,8 +110,9 @@ export default {
     return {
       posts: [],
       comments: [],
-      userId: localStorage.getItem("userId"),
-      isAdmin: localStorage.getItem("isAdmin"),
+      userId: this.$store.state.user.userId,
+      isAdmin: this.$store.state.user.isAdmin,
+      isLogged: this.$store.state.user.isLogged,
     };
   },
   // après que le composant est chargé, on exécute tout ce qui est à l'intérieur de la fct mounted
@@ -120,7 +121,6 @@ export default {
       this.posts = response.data.result.posts;
       this.comments = response.data.result.comments;
     });
-    console.log({ userId: this.userId, isAdmin: this.isAdmin });
   },
   methods: {
     goToEditPage(id) {

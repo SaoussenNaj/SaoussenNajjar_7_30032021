@@ -12,7 +12,7 @@
         <div class="input-group mb-3">
           <input
             v-model="password"
-            type="text"
+            type="password"
             class="form-control"
             name="password"
             placeholder="Ecrivez votre mot de passe"
@@ -44,10 +44,14 @@ export default {
     deleteAccount() {
       deleteUser(this.password)
         .then(() => {
+          // on supprime le token du user du loalstorage
           localStorage.removeItem("token");
-          localStorage.removeItem("isAdmin");
-          localStorage.removeItem("userId");
-          this.$router.push("Login");
+          // on solicite la méhode signout du store
+          this.$store.dispatch("signout").then(() => {
+            // on redirige le user vers la vue Login et un message apparait
+            this.$router.push("Login");
+            alert("compte supprimé");
+          });
         })
         .catch((err) => console.log(err));
     },

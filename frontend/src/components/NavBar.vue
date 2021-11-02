@@ -3,23 +3,29 @@
     <nav class="navbar navStyle">
       <div class="container-fluid position">
         <a class="navbar-brand" href="/Home">
-          <img class="logo" alt="logo" src="/assets/icon-left-font.png" />
+          <img
+            class="logo"
+            alt="logo"
+            src="../assets/icon-left-font-monochrome-white.png"
+          />
         </a>
         <form class="d-flex">
           <button
+            v-if="isLogged === true"
             class="btn btn-outline-success btn-light btn-style"
             @click="goToProfilPage"
           >
             Profil
           </button>
           <button
-            v-if="isAdmin === 'true'"
+            v-if="isAdmin === true && isLogged === true"
             class="btn btn-outline-success btn-light btn-style"
             @click="goToAdminsPage"
           >
             Administrateur
           </button>
           <button
+            v-if="isLogged === true"
             class="btn btn-outline-danger btn-light btn-style"
             @click="signout"
           >
@@ -34,13 +40,13 @@
 <script>
 export default {
   name: "NavBar",
-  data() {
-    return {
-      isAdmin: localStorage.getItem("isAdmin"),
-    };
-  },
-  mounted() {
-    console.log(this.isAdmin);
+  computed: {
+    isAdmin() {
+      return this.$store.state.user.isAdmin;
+    },
+    isLogged() {
+      return this.$store.state.user.isLogged;
+    },
   },
   methods: {
     goToAdminsPage() {
@@ -48,9 +54,7 @@ export default {
     },
     signout() {
       localStorage.removeItem("token");
-      localStorage.removeItem("isAdmin");
-      localStorage.removeItem("userId");
-      this.$router.push("/login");
+      this.$store.dispatch("signout").then(() => this.$router.push("/login"));
     },
     goToProfilPage() {
       this.$router.push("Profil");

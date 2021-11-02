@@ -7,16 +7,32 @@ import AddPost from "../components/AjoutPost.vue";
 import EditPost from "../components/EditPost.vue";
 import Admins from "../views/Admin.vue";
 import Profil from "../views/Profil.vue";
+import store from "../store";
 
 Vue.use(VueRouter);
 
 // pour garder la session ouverte de l'utilisateur, on crée authenticate pour verifier la présence ou pas du token dans localstorage
 const authenticate = (to, from, next) => {
+  store.state.user.isLogged = true;
+  function logout() {
+    if (localStorage.getItem("token")) {
+      localStorage.removeItem("token");
+    }
+    store.state.user.isLogged = false;
+    next("/login");
+  }
+
+  if (!localStorage.getItem("token")) {
+    logout();
+    return;
+  }
+
   if (localStorage.getItem("token")) {
     next();
   } else next("/login");
 };
 
+// Configuration des différentes routes
 const routes = [
   {
     path: "/",

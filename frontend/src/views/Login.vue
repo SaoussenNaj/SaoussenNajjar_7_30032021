@@ -70,8 +70,9 @@ export default {
       login(data)
         .then((response) => {
           localStorage.setItem("token", response.data.token);
-          localStorage.setItem("isAdmin", response.data.isAdmin);
-          localStorage.setItem("userId", response.data.userId);
+          this.$store.state.user.isAdmin = response.data.isAdmin;
+          this.$store.state.user.userId = response.data.userId;
+          this.$store.state.user.islogged = true;
           this.$router.push("/"); //push() pour la redirection vers la page Home
         })
         .catch((err) => console.log(err));

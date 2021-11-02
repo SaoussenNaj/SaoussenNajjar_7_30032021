@@ -66,23 +66,49 @@ export default {
         password: "",
         published: false,
       },
-      submitted: false,
     };
   },
   methods: {
+    // valider les inputs email et mot de passe los de l'inscription
+
+    validForm() {
+      let usernameRegex = new RegExp(
+        "^[a-zA-Z0-9][a-zA-Z0-9]{6,18}[a-zA-Z0-9]$"
+      );
+      let testUsername = usernameRegex.test(this.user.username);
+      let emailRegExp = new RegExp(
+        "^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$",
+        "g"
+      );
+      // tester l'expression reguliere
+      let testEmail = emailRegExp.test(this.user.email);
+      let passwordRegExp = new RegExp(
+        "^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[W]).{8,64}$"
+      );
+      let testPassword = passwordRegExp.test(this.user.password);
+
+      return testEmail && testPassword && testUsername;
+    },
+
+    // méthode pour enregistrer le nouveau utilisateur
     saveUser() {
       const data = {
         username: this.user.username,
         email: this.user.email,
         password: this.user.password,
       };
-      signup(data)
-        .then(() => {
-          this.$router.push("Login");
-        })
-        .catch((err) => console.log(err));
+      const isformValid = this.validForm();
+      if (isformValid) {
+        signup(data)
+          .then(() => {
+            this.$router.push("Login");
+          })
+          .catch((err) => console.log(err));
+      } else {
+        alert("error");
+      }
+      // pour s'inscrire
     },
-
     newUser() {
       this.submitted = false;
       this.user = {};
@@ -96,8 +122,6 @@ export default {
   background-image: url(../assets/london.png);
   background-repeat: no-repeat;
   height: 100%;
-
-  /* Center and scale the image nicely */
   background-position: center;
   background-size: cover;
 }
