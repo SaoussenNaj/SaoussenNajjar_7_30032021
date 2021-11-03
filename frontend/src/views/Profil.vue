@@ -10,10 +10,12 @@
           <li class="list-group-item margin ">Email: {{ user.email }}</li>
         </ul>
         <div class="input-group mb-3">
+          <label for="password">Mot de passe:</label>
           <input
             v-model="password"
             type="password"
             class="form-control"
+            id="password"
             name="password"
             placeholder="Ecrivez votre mot de passe"
           />

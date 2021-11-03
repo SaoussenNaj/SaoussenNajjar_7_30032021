@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navStyle">
       <div class="container-fluid position">
-        <a class="navbar-brand" href="/Home">
+        <a class="navbar-brand" @click="goToHome">
           <img
             class="logo"
             alt="logo"
@@ -12,21 +12,21 @@
         <form class="d-flex">
           <button
             v-if="isLogged === true"
-            class="btn btn-outline-success btn-light btn-style"
+            class="btn btn-success btn-light btn-style"
             @click="goToProfilPage"
           >
             Profil
           </button>
           <button
             v-if="isAdmin === true && isLogged === true"
-            class="btn btn-outline-success btn-light btn-style"
+            class="btn btn-success btn-light btn-style"
             @click="goToAdminsPage"
           >
             Administrateur
           </button>
           <button
             v-if="isLogged === true"
-            class="btn btn-outline-danger btn-light btn-style"
+            class="btn btn-danger btn-light btn-style"
             @click="signout"
           >
             Déconnexion
@@ -58,6 +58,9 @@ export default {
     },
     goToProfilPage() {
       this.$router.push("Profil");
+    },
+    goToHome() {
+      this.$router.push("/");
     },
   },
 };

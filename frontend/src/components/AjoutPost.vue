@@ -117,6 +117,8 @@ export default {
   /*Centrez et redimensionnez bien l'image */
   background-position: center;
   background-size: cover;
+  display: flex;
+  justify-content: center;
 }
 .list {
   display: flex;
@@ -125,7 +127,6 @@ export default {
   align-items: center;
 }
 .style-li {
-  width: 50%;
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;

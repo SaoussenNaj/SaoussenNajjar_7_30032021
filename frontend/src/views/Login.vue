@@ -10,7 +10,7 @@
     <div class="submit-form">
       <h2 class="styleTitle">Login</h2>
       <div class="form-group">
-        <label for="email" class="label-style">Email</label>
+        <label for="email" class="title-style">Email</label>
         <input
           type="email"
           class="form-control"
@@ -22,7 +22,7 @@
       </div>
 
       <div class="form-group">
-        <label for="password" class="label-style">Mot de passe</label>
+        <label for="password" class="title-style">Mot de passe</label>
         <input
           type="password"
           class="form-control"
@@ -67,18 +67,35 @@ export default {
         email: this.user.email,
         password: this.user.password,
       };
-      login(data)
-        .then((response) => {
-          localStorage.setItem("token", response.data.token);
-          this.$store.state.user.isAdmin = response.data.isAdmin;
-          this.$store.state.user.userId = response.data.userId;
-          this.$store.state.user.islogged = true;
-          this.$router.push("/"); //push() pour la redirection vers la page Home
-        })
-        .catch((err) => console.log(err));
+      const isformValid = this.validForm();
+      if (isformValid) {
+        login(data)
+          .then((response) => {
+            localStorage.setItem("token", response.data.token);
+            this.$store.state.user.isAdmin = response.data.isAdmin;
+            this.$store.state.user.userId = response.data.userId;
+            this.$store.state.user.islogged = true;
+            this.$router.push("/"); //push() pour la redirection vers la page Home
+          })
+          .catch(() => alert("email ou mot de passe incorrect"));
+      } else {
+        alert("error");
+      }
     },
     goToRegister() {
       this.$router.push("/inscription");
+    },
+    validForm() {
+      let emailRegExp = new RegExp(
+        "^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$",
+        "g"
+      );
+      // tester l'expression regex
+      let testEmail = emailRegExp.test(this.user.email);
+
+      let testPassword = this.user.password.length > 0;
+
+      return testEmail && testPassword;
     },
   },
 };
@@ -111,8 +128,8 @@ export default {
   color: black;
   margin-bottom: 40px;
 }
-.label-style {
-  color: white;
+.title-style {
+  color: rgb(8, 8, 8);
 }
 .btn-lien {
   display: flex;

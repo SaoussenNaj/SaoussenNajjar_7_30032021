@@ -11,18 +11,6 @@
     <div class="submit-form">
       <h2 class="styleTitle">Signup</h2>
       <div class="form-group">
-        <label for="email" class="label-style">Email</label>
-        <input
-          type="email"
-          class="form-control"
-          id="email"
-          required
-          v-model="user.email"
-          name="email"
-        />
-      </div>
-
-      <div class="form-group">
         <label for="username" class="label-style">Nom d'utilisateur</label>
         <input
           type="username"
@@ -31,6 +19,18 @@
           required
           v-model="user.username"
           name="username"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email" class="label-style">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          required
+          v-model="user.email"
+          name="email"
         />
       </div>
 
@@ -56,7 +56,7 @@
 <script>
 import { signup } from "../services/user";
 export default {
-  name: "add-user",
+  name: "addUser",
   data() {
     return {
       user: {
@@ -66,28 +66,45 @@ export default {
         password: "",
         published: false,
       },
+      alertMsg: "",
     };
   },
   methods: {
-    // valider les inputs email et mot de passe los de l'inscription
+    // valider les inputs username, email et mot de passe lors de l'inscription
 
     validForm() {
-      let usernameRegex = new RegExp(
-        "^[a-zA-Z0-9][a-zA-Z0-9]{6,18}[a-zA-Z0-9]$"
-      );
-      let testUsername = usernameRegex.test(this.user.username);
       let emailRegExp = new RegExp(
         "^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$",
         "g"
       );
-      // tester l'expression reguliere
+      // tester l'expression regex
+      let testUsername = this.user.username.length > 0;
       let testEmail = emailRegExp.test(this.user.email);
-      let passwordRegExp = new RegExp(
-        "^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[W]).{8,64}$"
-      );
-      let testPassword = passwordRegExp.test(this.user.password);
+
+      let testPassword = this.user.password.length > 8;
+
+      console.log({ testEmail, testPassword, testUsername });
 
       return testEmail && testPassword && testUsername;
+      // return testEmail;
+      // if (testEmail && testPassword && testUsername) {
+      // this.submitDisabled = false;
+      // this.alertError = false;
+      // } else {
+      // this.submitDisabled = true;
+      // this.alertError = true;
+      //   this.alertMsg = "";
+      //   if (this.addUser.username && !testUsername) {
+      //     this.alertMsg += "Nom d'utilisateur incorrect\n";
+      //   }
+      //   if (this.addUser.email && !testEmail) {
+      //     this.alertMsg += "E-mail incorrect\n";
+      //   }
+      //   if (this.addUser.password && !testPassword) {
+      //     this.alertMsg +=
+      //       "Mot de Passe incorrect\nMin. 8 + [a-z] + [A-Z] + [0-9] + [!/?% ...]";
+      //   }
+      // }
     },
 
     // méthode pour enregistrer le nouveau utilisateur

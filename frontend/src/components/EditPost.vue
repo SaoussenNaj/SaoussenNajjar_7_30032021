@@ -2,35 +2,37 @@
   <div>
     <Navbar />
     <!-- for new post -->
-    <form id="formPost">
+    <form id="formPost" class="main-form">
       <div class="header-box">
-        <h2>Edit Post</h2>
+        <h2>Modifier Post</h2>
       </div>
       <div v-if="image != ''" class="image-block">
         <img :src="image" />
       </div>
+      <div class="title-desc">
+        <div class="mb-3">
+          <label for="title" class="form-label">Titre</label>
+          <input
+            v-model="title"
+            class="form-control"
+            name="title"
+            id="title"
+            type="text"
+          />
+        </div>
 
-      <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input
-          v-model="title"
-          class="form-control"
-          name="title"
-          id="title"
-          type="text"
-        />
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <input
+            v-model="description"
+            class="form-control"
+            name="description"
+            id="description"
+            type="text"
+          />
+        </div>
       </div>
 
-      <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <input
-          v-model="description"
-          class="form-control"
-          name="description"
-          id="description"
-          type="text"
-        />
-      </div>
       <div>
         <input
           name="image"
@@ -39,14 +41,17 @@
           @change="updatePicture"
           accept="image/png, image/jpg, image/jpeg, image/gif"
         />
-        <input
-          type="button"
-          value="Choisir une image*"
-          onclick="document.getElementById('input-image').click();"
-        />
-        <button @click="submitData" type="button">
-          Valider
-        </button>
+        <div class="style-btn">
+          <input
+            type="button"
+            value="Choisir une image"
+            onclick="document.getElementById('input-image').click();"
+            class="margin-right"
+          />
+          <button @click="submitData" type="button">
+            Valider
+          </button>
+        </div>
       </div>
     </form>
   </div>
@@ -111,7 +116,23 @@ export default {
 </script>
 
 <style scoped>
+.main-form {
+  height: 100%;
+}
 #input-image {
   display: none;
+}
+.style-btn {
+  margin-left: 15px;
+  margin-bottom: 30px;
+}
+.title-desc {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.margin-right {
+  margin-right: 10px;
 }
 </style>
