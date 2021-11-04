@@ -79,9 +79,6 @@ export default {
 .btn-style {
   margin-left: 15px;
 }
-.h4 {
-  color: red;
-}
 .logo {
   width: 150px;
   height: 150px;

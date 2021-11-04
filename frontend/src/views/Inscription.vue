@@ -86,25 +86,6 @@ export default {
       console.log({ testEmail, testPassword, testUsername });
 
       return testEmail && testPassword && testUsername;
-      // return testEmail;
-      // if (testEmail && testPassword && testUsername) {
-      // this.submitDisabled = false;
-      // this.alertError = false;
-      // } else {
-      // this.submitDisabled = true;
-      // this.alertError = true;
-      //   this.alertMsg = "";
-      //   if (this.addUser.username && !testUsername) {
-      //     this.alertMsg += "Nom d'utilisateur incorrect\n";
-      //   }
-      //   if (this.addUser.email && !testEmail) {
-      //     this.alertMsg += "E-mail incorrect\n";
-      //   }
-      //   if (this.addUser.password && !testPassword) {
-      //     this.alertMsg +=
-      //       "Mot de Passe incorrect\nMin. 8 + [a-z] + [A-Z] + [0-9] + [!/?% ...]";
-      //   }
-      // }
     },
 
     // méthode pour enregistrer le nouveau utilisateur

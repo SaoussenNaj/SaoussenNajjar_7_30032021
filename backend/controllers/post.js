@@ -34,7 +34,7 @@ exports.getPost = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-//Creer un post
+//Créer un post
 exports.createPost = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
   const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
@@ -106,6 +106,7 @@ exports.modifyPost = (req, res, next) => {
                 }
               });
             }
+            // mettre à jour le post
             db.post
               .update(postObject, { where: { id: req.params.id } })
               .then(() => {
@@ -138,7 +139,7 @@ exports.deletePost = (req, res, next) => {
           where: { id: req.params.id },
         })
         .then((post) => {
-          //verifier si il s'agit d'un utilisateur ou d'un admin
+          //vérifier si il s'agit d'un utilisateur ou d'un admin
           if (
             userId == post.dataValues.userId ||
             user.dataValues.isAdmin == "1"

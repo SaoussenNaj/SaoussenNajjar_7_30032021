@@ -45,8 +45,6 @@
 </template>
 
 <script>
-//
-
 import { login } from "../services/user";
 export default {
   name: "connect-user",

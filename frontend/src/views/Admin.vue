@@ -34,10 +34,6 @@ export default {
   background-size: cover;
 }
 .list {
-  /* display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center; */
   justify-content: center;
 }
 .margin {

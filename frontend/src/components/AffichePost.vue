@@ -16,10 +16,7 @@
             </p>
             <div v-for="comment in comments" :key="comment.id">
               <div v-if="comment.postId === post.id">
-                <div
-                  class="edit-comment mb-3"
-                  style="display:flex;align-items:center;gap:12px"
-                >
+                <div class="edit-comment mb-3 style-div">
                   <div
                     v-bind:id="`comment-${comment.id}`"
                     style="display:flex;"
@@ -50,15 +47,13 @@
                     <span @click="showEdit(comment.id, comment.comment)">
                       <i
                         v-if="userId == comment.authorId || isAdmin === true"
-                        class="fas fa-edit"
-                        style="cursor: pointer;"
+                        class="fas fa-edit style-icon"
                       ></i>
                     </span>
                     <span @click="deleteComment(comment.id)">
                       <i
                         v-if="userId == comment.authorId || isAdmin === true"
-                        class="fas fa-trash-alt"
-                        style="cursor: pointer;"
+                        class="fas fa-trash-alt style-icon"
                       ></i
                     ></span>
                   </div>
@@ -125,7 +120,7 @@ export default {
       return this.$store.state.user.userId;
     },
   },
-  // après que le composant est chargé, on exécute tout ce qui est à l'intérieur de la fct mounted
+  // après que le composant soit chargé, on exécute tout ce qui est à l'intérieur de la fct mounted
   mounted() {
     getPosts().then((response) => {
       this.posts = response.data.result.posts;
@@ -197,7 +192,11 @@ export default {
   align-items: center;
   justify-content: space-around;
 }
-
+.style-div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 .card-style {
   margin-bottom: 20px;
 }
@@ -205,6 +204,10 @@ export default {
   align-self: flex-end;
   margin: 16px;
 }
+.style-icon {
+  cursor: pointer;
+}
+
 .btn-edit-delete-post {
   display: flex;
   justify-content: flex-end;

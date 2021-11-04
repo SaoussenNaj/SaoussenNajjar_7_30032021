@@ -4,9 +4,11 @@ const jwt = require("jsonwebtoken");
 
 // Ajout d'un commentaire
 exports.addComment = (req, res, next) => {
+  // déclaration du token
   const token = req.headers.authorization.split(" ")[1];
   const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
   const userId = decodedToken.userId;
+  // on récupère le user de la BD grace à findone
   db.user
     .findOne({
       attributes: ["username"],
@@ -19,6 +21,7 @@ exports.addComment = (req, res, next) => {
         postId: req.params.id,
         comment: req.body.comment,
       };
+      // création d'un nv comment
       db.comment.create(newComment).then(() => {
         res.status(201).json({ message: "Commentaire ajouté!" });
       });
@@ -69,11 +72,13 @@ exports.deleteComment = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
   const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
   const userId = decodedToken.userId;
+  // on verifie si user est un admin
   db.user
     .findOne({
       attributes: ["isAdmin"],
       where: { id: userId },
     })
+    // ou cherche le créateur de ce comment
     .then((user) => {
       db.comment
         .findOne({

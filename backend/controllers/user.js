@@ -64,7 +64,7 @@ exports.delete = (req, res, next) => {
       if (!user) {
         return res.status(401).json({ error: "Utilisateur non trouvé!" });
       }
-      //
+      // comparer le mot de passe saisie à celui qui se trouve dans la bd
       bcrypt
         .compare(req.body.password, user.dataValues.password)
         .then((valid) => {
@@ -73,6 +73,7 @@ exports.delete = (req, res, next) => {
           }
           //supprimer l'utilisateur et tous les posts qui lui correspond
           db.user.destroy({ where: { id: userId } });
+          // trouver tous les posts liés à cet utilisateur
           db.post
             .findAll({ where: { userId: userId } })
             .then((result) => {
@@ -82,7 +83,7 @@ exports.delete = (req, res, next) => {
                 postsId.push(result[i].id);
                 postsUrlImage.push(result[i].imgURL.split("/images/")[1]);
               }
-              //trouver les images liés aux posts et les supprimer
+              //trouver les images liés aux posts
               for (let i = 0; i < postsUrlImage.length; i++) {
                 fs.unlink(`images/${postsUrlImage[i]}`, (err) => {
                   if (err) {
@@ -100,7 +101,7 @@ exports.delete = (req, res, next) => {
               });
               //delete user posts
               db.post.destroy({ where: { userId: userId } }).then(() => {
-                res.status(200).json({ message: "User deleted" });
+                res.status(200).json({ message: "Utilisateur supprimé" });
               });
             })
             .catch((error) => res.status(401).json({ error }));
@@ -109,6 +110,7 @@ exports.delete = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
+//  pour récupérer tous les admins enregistré dans la BD
 exports.getAdmins = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
   const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
@@ -134,7 +136,7 @@ exports.getAdmins = (req, res, next) => {
     })
     .catch((error) => res.status(500).json({ error }));
 };
-
+//  récupérer un utlisateur
 exports.getUser = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
   const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");

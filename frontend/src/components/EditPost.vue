@@ -77,7 +77,7 @@ export default {
     });
   },
   methods: {
-    //to generate the image selected by the user
+    //pour généré l'image choisi par l'utilisateur
     createImage(file) {
       const reader = new FileReader();
       const vm = this;
@@ -95,7 +95,7 @@ export default {
       this.createImage(file[0]);
     },
 
-    /* Submit */
+    /* Envoie des données */
     submitData() {
       if (this.submitDisabled) {
         return;

@@ -69,10 +69,6 @@ export default {
   background-position: center;
   background-size: cover;
 }
-/* .style-li {
-  width: 50%;
-  margin-bottom: 15px;
-} */
 .style-group {
   display: flex;
   justify-content: center;
