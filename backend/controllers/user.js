@@ -52,6 +52,7 @@ exports.login = (req, res, next) => {
 };
 //supprimer un utilisateur
 exports.delete = (req, res, next) => {
+  // on recupère userid du token jwt
   const token = req.headers.authorization.split(" ")[1];
   const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
   const userId = decodedToken.userId;

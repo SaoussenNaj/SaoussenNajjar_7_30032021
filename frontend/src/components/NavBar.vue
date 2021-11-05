@@ -82,5 +82,6 @@ export default {
 .logo {
   width: 150px;
   height: 150px;
+  cursor: pointer;
 }
 </style>

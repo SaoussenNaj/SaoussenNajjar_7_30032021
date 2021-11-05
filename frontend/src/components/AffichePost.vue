@@ -25,6 +25,7 @@
                     <div>{{ comment.comment }}</div>
                   </div>
                   <div class="input-group">
+                    <!-- <label for="commentaire">Commentaire</label><br /> -->
                     <input
                       v-bind:id="`comment-${comment.id}-edit`"
                       type="text"

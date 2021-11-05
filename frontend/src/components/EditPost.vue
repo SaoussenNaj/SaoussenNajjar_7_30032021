@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Navbar />
     <!-- for new post -->
     <form id="formPost" class="main-form">
       <div class="header-box">
@@ -97,9 +96,6 @@ export default {
 
     /* Envoie des données */
     submitData() {
-      if (this.submitDisabled) {
-        return;
-      }
       let formData = {};
       formData = new FormData(document.getElementById("formPost"));
 

@@ -54,13 +54,10 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import { createPost } from "../services/post";
 export default {
   name: "AjoutPost",
-  computed: {
-    ...mapState(["api", "user", "boxPost"]),
-  },
+
   data() {
     return {
       image: "",
@@ -99,6 +96,7 @@ export default {
       // création d'un nouveau post
       createPost(formData)
         .then(() => {
+          // pour diriger vers la page home
           this.$router.push("/");
         })
         .catch((err) => {
