@@ -135,6 +135,6 @@ export default {
   margin-bottom: 40px;
 }
 .label-style {
-  color: white;
+  color: black;
 }
 </style>
