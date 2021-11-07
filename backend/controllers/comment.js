@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 exports.addComment = (req, res, next) => {
   // déclaration du token
   const token = req.headers.authorization.split(" ")[1];
-  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
   const userId = decodedToken.userId;
   // on récupère le user de la BD grace à findone
   db.user
@@ -32,7 +32,7 @@ exports.addComment = (req, res, next) => {
 // Modifier un commentaire
 exports.modifyComment = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
-  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
   const userId = decodedToken.userId;
   db.user
     .findOne({
@@ -70,7 +70,7 @@ exports.modifyComment = (req, res, next) => {
 // Suppression d'un commentaire
 exports.deleteComment = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
-  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
   const userId = decodedToken.userId;
   // on verifie si user est un admin
   db.user

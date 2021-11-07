@@ -41,7 +41,7 @@ exports.login = (req, res, next) => {
           return res.status(200).json({
             userId: user.id,
             isAdmin: user.isAdmin,
-            token: jwt.sign({ userId: user.id }, "RANDOM_TOKEN_SECRET", {
+            token: jwt.sign({ userId: user.id }, process.env.SECRET_KEY, {
               expiresIn: "2h",
             }),
           });
@@ -54,7 +54,7 @@ exports.login = (req, res, next) => {
 exports.delete = (req, res, next) => {
   // on recupère userid du token jwt
   const token = req.headers.authorization.split(" ")[1];
-  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
   const userId = decodedToken.userId;
   console.log(req.body.password);
   db.user
@@ -114,7 +114,7 @@ exports.delete = (req, res, next) => {
 //  pour récupérer tous les admins enregistré dans la BD
 exports.getAdmins = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
-  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
   const userId = decodedToken.userId;
   db.user
     .findOne({
@@ -140,7 +140,7 @@ exports.getAdmins = (req, res, next) => {
 //  récupérer un utlisateur
 exports.getUser = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
-  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
   const userId = decodedToken.userId;
   db.user
     .findOne({

@@ -37,7 +37,7 @@ exports.getPost = (req, res, next) => {
 //Créer un post
 exports.createPost = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
-  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
   const userId = decodedToken.userId;
   db.user
     .findOne({
@@ -68,7 +68,7 @@ exports.createPost = (req, res, next) => {
 //  modifier un post
 exports.modifyPost = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
-  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
   const userId = decodedToken.userId;
   db.user
     .findOne({
@@ -125,7 +125,7 @@ exports.modifyPost = (req, res, next) => {
 // supprimer post
 exports.deletePost = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
-  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
   const userId = decodedToken.userId;
   db.user
     .findOne({

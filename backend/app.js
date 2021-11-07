@@ -12,7 +12,6 @@ const db = require("./models");
 //
 // creation variable app pour notre application et appeler express()ce qui permet de créer une application express
 const app = express();
-
 // middelware general appliqué a toutes les routes du serveur
 // pour passer d'un middelware à un autre on utilise next()
 app.use((req, res, next) => {
@@ -31,6 +30,7 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(cors());
 db.sequelize.sync();
+
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/api/auth", userRoutes);
 app.use("/api/posts", postRoutes);

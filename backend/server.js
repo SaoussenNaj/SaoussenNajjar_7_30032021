@@ -2,6 +2,7 @@
 const http = require("http");
 // importer l'app
 const app = require("./app");
+
 //la fonction normalizePort renvoie un port valide
 const normalizePort = (val) => {
   const port = parseInt(val, 10);
